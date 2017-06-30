@@ -5,12 +5,13 @@
  -->
 <html>
 
-<body>
+<body style="overflow:hidden">
 
   <head>
     <!-- Imported libraries -->
     <script src="libs/jquery-3.2.1.min.js"></script>
     <script src="libs/velocity.min.js"></script>
+    <script src="libs/jquery.scrollLock.simple.js"></script>
     <link rel="stylesheet" href="css/animate.css">
     <link rel="stylesheet" href="css/cssStuff.css">
 	 	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lobster">
@@ -107,14 +108,22 @@
         var windowWidth = $( window ).width(),
         titleCenter = (windowWidth/2) - $('#title').width()/2;
 
+        //lock scrolling for intro
+        $('body').css({'overflow':'hidden'}); $(document).bind('scroll',function () { window.scrollTo(0,0); });
+
         //introductory animations
         $('#mountain-two-light,#mountain-three-light,#mountain-four-light').velocity(
-          "fadeIn", { duration: 5000 }
+          "fadeIn", { duration: 3000 }
         );
 
         $('#sun').velocity(
-          "slideUp", { duration: 3000 }
+          { translateX : -500 },
+          { duration: 1, loop: false }
+        ).velocity(
+          { translateX : 50 },
+          { duration: 2500, loop: false }
         );
+
 
         // $('#mountain-two-light,#mountain-three-light,#mountain-four-light').addClass('animated fadeIn').css("-webkit-animation-duration", "5s").css("-webkit-animation-delay", "1.25s");
         // $('#sun').addClass('animated slideInLeft').css("-webkit-animation-duration", "3s");
@@ -123,7 +132,7 @@
         // $('#mountain-two').addClass('animated slideInUp').css("-webkit-animation-duration", "1s");
         // $('#mountain-one').addClass('animated slideInUp');
         // $('#bird-one,#bird-two').addClass('animated lightSpeedIn');
-        // $('#title, #desc').attr('x',titleCenter).addClass('animated zoomInDown').css("-webkit-animation-duration", "2s");
+         $('#title, #desc').attr('x',titleCenter);//.addClass('animated zoomInDown').css("-webkit-animation-duration", "2s");
 
         //cloud animations
         for(var i = 0;i<20;i++){
@@ -143,37 +152,45 @@
                 );
         }
 
-        //parallax mountains effect (FIX NOT WORKING WITH ANIMATE.CSS)
-        $(window).scroll(function(){
-          var scrollTop = $(this).scrollTop();
-          console.log(scrollTop);
-         if(scrollTop > 420){ //change sky and mountain lights at 420 scrolltop
-            $('#sky').css("fill","#black");
-          }
-          $('#sun').velocity(
-            { translateY : scrollTop*1.5 },
-            { duration: 1, loop: false }
-          );
-          $('#mountain-four, #mountain-four-light').velocity(
-            { translateY : scrollTop/1.25 },
-            { duration: 1, loop: false }
-          );
-          $('#mountain-three, #mountain-three-light').velocity(
-            { translateY : scrollTop/1.75 },
-            { duration: 1, loop: false }
-          );
-          $('#mountain-two, #mountain-two-light').velocity(
-            { translateY : scrollTop/2 },
-            { duration: 1, loop: false }
-          );
-          $('#mountain-one').velocity(
-            { translateY : scrollTop/5 },
-            { duration: 1, loop: false }
-          );
-        });
+        //unlock scroll
+       setTimeout(function(){
+         $(document).unbind('scroll');
+         $('body').css({'overflow':'visible'});
+       },3100);
+
+//parallax mountains effect (FIX NOT WORKING WITH ANIMATE.CSS)
+setTimeout(function(){
+    $(window).scroll(function(){
+      var scrollTop = $(this).scrollTop();
+      console.log(scrollTop);
+     if(scrollTop > 420){ //change sky and mountain lights at 420 scrolltop
+        $('#sky').css("fill","#black");
+      }
+      $('#sun').velocity(
+        { translateY : scrollTop*1.5 },
+        { duration: 1, loop: false }
+      );
+      $('#mountain-four, #mountain-four-light').velocity(
+        { translateY : scrollTop/1.25 },
+        { duration: 1, loop: false }
+      );
+      $('#mountain-three, #mountain-three-light').velocity(
+        { translateY : scrollTop/1.75 },
+        { duration: 1, loop: false }
+      );
+      $('#mountain-two, #mountain-two-light').velocity(
+        { translateY : scrollTop/2.5 },
+        { duration: 1, loop: false }
+      );
+      $('#mountain-one').velocity(
+        { translateY : scrollTop/7 },
+        { duration: 1, loop: false }
+      );
+    });
+}, 3000);
+
 
       });
-
     </script>
   </section>
 
