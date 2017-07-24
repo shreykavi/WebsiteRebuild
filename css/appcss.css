@@ -1,0 +1,22 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+div {
+  /*-webkit-transform: translateZ(0);-webkit-backface-visibility: hidden;-webkit-perspective: 1000;*/
+  font-size: 0;
+  margin: 0; 
+ }
+
+html, body {
+    margin: 0;
+}
+
+.svg-container {
+  overflow-x: hidden;
+}
+
+p {
+    position:absolute;
+}
